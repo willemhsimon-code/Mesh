@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mesh prototype</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#D81B60}a:hover{color:#A3124A}
+button,input,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #F6F7FB; color: #14213D; font-family: Georgia, 'Times New Roman', serif; overflow: hidden; box-sizing: border-box">
+
+<!-- ============ TOP BAR ============ -->
+<sc-if value="{{ showTopBar }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 14px 20px 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-bottom: 1px solid #DDE2EE">
+<button onClick="{{ restart }}" aria-label="Restart prototype from the start screen" style="min-height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 700; color: #14213D; letter-spacing: -0.5px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #D81B60; display: inline-block"></span>mesh</button>
+<div style="display: flex; background: #E8ECF5; border-radius: 999px; padding: 4px; gap: 2px">
+<button onClick="{{ toNeed }}" style="{{ needTabStyle }}">Get help</button>
+<button onClick="{{ toGive }}" style="{{ giveTabStyle }}">Give help</button>
+</div>
+</div>
+</sc-if>
+
+<div style="flex: 1; min-height: 0; overflow-y: auto">
+
+<!-- ============ WELCOME ============ -->
+<sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ true }}">
+<div style="height: 844px; box-sizing: border-box; padding: 60px 28px 40px; display: flex; flex-direction: column; justify-content: space-between; background: #14213D; color: #FFFFFF">
+<div style="display: flex; align-items: center; gap: 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 700; letter-spacing: -0.5px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #FF5C93; display: inline-block"></span>mesh</div>
+<div style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; gap: 10px">
+<div style="padding: 8px 12px; border-radius: 999px; background: #22325A; font-size: 13px; font-weight: 600; color: #FFC2D6">Video help</div>
+<div style="padding: 8px 12px; border-radius: 999px; background: #22325A; font-size: 13px; font-weight: 600; color: #FFC2D6">In-person visits</div>
+</div>
+<h1 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 40px; line-height: 1.08; font-weight: 700; letter-spacing: -1px">Tech help from people you trust.</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #C9D2E8">Get patient help with phones, Wi-Fi, TVs and more, over a video call or at your door. Good with tech? Join the Mesh.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<button onClick="{{ goRole }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #FF5C93; color: #14213D; font-size: 17px; font-weight: 700; cursor: pointer">Get started</button>
+<button onClick="{{ goRole }}" style="min-height: 48px; border: 1px solid #3D4F7C; border-radius: 14px; background: transparent; color: #FFFFFF; font-size: 15px; font-weight: 500; cursor: pointer">I already have an account</button>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ ROLE PICK ============ -->
+<sc-if value="{{ isRole }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 36px 24px 32px; display: flex; flex-direction: column; gap: 22px; min-height: 844px; box-sizing: border-box; background: #FFFFFF">
+<button onClick="{{ goWelcome }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #55607A; font-size: 15px; cursor: pointer">← Back</button>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 30px; line-height: 1.15; font-weight: 700">Where do you want to start?</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #55607A">One account does both. Switch any time.</p>
+</div>
+<button onClick="{{ pickNeed }}" style="{{ needCardStyle }}">
+<div style="display: flex; align-items: center; gap: 14px">
+<div style="width: 48px; height: 48px; border-radius: 12px; background: #E8ECF5; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14213D" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"></path><path d="M12 17h.01"></path></svg>
+</div>
+<div style="text-align: left">
+<div style="font-size: 18px; font-weight: 700; color: #14213D">I need tech help</div>
+<div style="font-size: 14px; line-height: 1.45; color: #55607A; margin-top: 2px">Get patient help over video or at home.</div>
+</div>
+</div>
+</button>
+<button onClick="{{ pickGive }}" style="{{ giveCardStyle }}">
+<div style="display: flex; align-items: center; gap: 14px">
+<div style="width: 48px; height: 48px; border-radius: 12px; background: #FDE7EF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D81B60" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path><path d="M9 10l2 2 4-4"></path></svg>
+</div>
+<div style="text-align: left">
+<div style="font-size: 18px; font-weight: 700; color: #14213D">I'm good with tech</div>
+<div style="font-size: 14px; line-height: 1.45; color: #55607A; margin-top: 2px">Help people from anywhere, earn and build your reputation.</div>
+</div>
+</div>
+</button>
+<div style="flex: 1"></div>
+<button onClick="{{ goSignup }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #14213D; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer">Continue</button>
+</div>
+</sc-if>
+
+<!-- ============ SIGN UP ============ -->
+<sc-if value="{{ isSignup }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 36px 24px 32px; display: flex; flex-direction: column; gap: 20px; min-height: 844px; box-sizing: border-box; background: #FFFFFF">
+<button onClick="{{ goRole }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #55607A; font-size: 15px; cursor: pointer">← Back</button>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 30px; line-height: 1.15; font-weight: 700">Let's set you up</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #55607A">Just the basics. Your address is only shared for in-person visits you book.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="su-name" style="font-size: 14px; font-weight: 600">Your name</label>
+<input id="su-name" onChange="{{ setName }}" placeholder="Alex Rivera" style="min-height: 50px; padding: 0 14px; border: 1px solid #C7CEDF; border-radius: 12px; background: #FFFFFF; font-size: 16px; color: #14213D">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="su-phone" style="font-size: 14px; font-weight: 600">Phone</label>
+<input id="su-phone" placeholder="(555) 555-0123" style="min-height: 50px; padding: 0 14px; border: 1px solid #C7CEDF; border-radius: 12px; background: #FFFFFF; font-size: 16px; color: #14213D">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="su-zip" style="font-size: 14px; font-weight: 600">ZIP code</label>
+<input id="su-zip" placeholder="60302" style="min-height: 50px; padding: 0 14px; border: 1px solid #C7CEDF; border-radius: 12px; background: #FFFFFF; font-size: 16px; color: #14213D">
+<div style="font-size: 13px; color: #55607A">Used to find helpers near you for in-person visits.</div>
+</div>
+<div style="flex: 1"></div>
+<sc-if value="{{ roleIsGive }}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 14px; line-height: 1.45; color: #55607A; text-align: center">Next: pick your skills and how you like to help.</div>
+</sc-if>
+<button onClick="{{ finishSignup }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #14213D; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer">Continue</button>
+</div>
+</sc-if>
+
+<!-- ============ HELPER SETUP ============ -->
+<sc-if value="{{ isHelperSetup }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 24px 24px 32px; display: flex; flex-direction: column; gap: 22px">
+<button onClick="{{ leaveHelperSetup }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #55607A; font-size: 15px; cursor: pointer">← Back</button>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #D81B60">Become a helper</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; line-height: 1.15; font-weight: 700">What can you help with?</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55607A">Badges like "Wi-Fi Pro" are earned from completed sessions, not claimed.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ skills }}" as="s" hint-placeholder-count="8">
+<button onClick="{{ s.toggle }}" style="{{ s.style }}">{{ s.label }}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">How do you want to help?</div>
+<button onClick="{{ toggleHelpVirtual }}" style="{{ helpVirtualStyle }}">
+<span style="display: block; font-size: 15px; font-weight: 700; color: #14213D">Video help</span>
+<span style="display: block; font-size: 13px; color: #55607A; margin-top: 2px">Help anyone in the country from home</span>
+</button>
+<button onClick="{{ toggleHelpInPerson }}" style="{{ helpInPersonStyle }}">
+<span style="display: block; font-size: 15px; font-weight: 700; color: #14213D">In-person visits</span>
+<span style="display: block; font-size: 13px; color: #55607A; margin-top: 2px">Local jobs near you · background check required</span>
+</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Trust &amp; safety</div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px; background: #FFFFFF; border: 1px solid #DDE2EE; border-radius: 14px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="12" r="2"></circle><path d="M14 10h4M14 14h4"></path></svg>
+<div style="flex: 1"><div style="font-size: 15px; font-weight: 600">Verify your ID</div><div style="font-size: 13px; color: #55607A">Required for all helpers</div></div>
+<span style="font-size: 13px; font-weight: 700; color: #D81B60">Start</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px; background: #FFFFFF; border: 1px solid #DDE2EE; border-radius: 14px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"></path><path d="M9 12l2 2 4-4"></path></svg>
+<div style="flex: 1"><div style="font-size: 15px; font-weight: 600">Background check</div><div style="font-size: 13px; color: #55607A">Required before in-person visits</div></div>
+<span style="font-size: 13px; font-weight: 700; color: #D81B60">Start</span>
+</div>
+</div>
+<div style="padding: 14px; border-radius: 14px; background: #14213D; color: #FFFFFF; font-size: 14px; line-height: 1.5">
+<div style="font-weight: 700; color: #FFC2D6; margin-bottom: 4px">The Mesh promise</div>
+Never ask for passwords, banking details or gift card codes. All video help runs through Mesh, never outside remote-access apps.
+</div>
+<button onClick="{{ finishHelper }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #D81B60; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer">I agree, start helping</button>
+</div>
+</sc-if>
+
+<!-- ============ HOME: GET HELP ============ -->
+<sc-if value="{{ isHomeNeed }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 22px 20px 28px; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 15px; color: #55607A">Hi, {{ firstName }}</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; line-height: 1.15; font-weight: 700">What's giving you trouble?</h2>
+</div>
+<button onClick="{{ goPost }}" style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 18px; border: 0; border-radius: 16px; background: #D81B60; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer; text-align: left">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" style="stroke-width: 2.2; stroke-linecap: round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+<span style="flex: 1">Ask for help</span>
+<span style="font-size: 14px; font-weight: 500; color: #FFE0EA">Takes 1 min</span>
+</button>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Common fixes</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{ quickTasks }}" as="t" hint-placeholder-count="4">
+<button onClick="{{ t.start }}" style="min-height: 88px; padding: 14px; border: 1px solid #DDE2EE; border-radius: 14px; background: #FFFFFF; text-align: left; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; gap: 6px">
+<span style="font-size: 15px; font-weight: 600; color: #14213D; line-height: 1.3">{{ t.label }}</span>
+<span style="font-size: 13px; color: #55607A">{{ t.price }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="font-size: 15px; font-weight: 700">Available for video now</div>
+<div style="font-size: 13px; color: #55607A">Nationwide</div>
+</div>
+<sc-for list="{{ helpers }}" as="h" hint-placeholder-count="3">
+<button onClick="{{ h.open }}" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #DDE2EE; border-radius: 14px; background: #FFFFFF; text-align: left; cursor: pointer">
+<div style="position: relative; flex-shrink: 0">
+<div style="{{ h.avatarStyle }}">{{ h.initials }}</div>
+<span style="position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; border-radius: 999px; background: #1F9D61; border: 2px solid #FFFFFF"></span>
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 15px; font-weight: 600; color: #14213D">{{ h.name }}</div>
+<div style="font-size: 13px; color: #55607A">{{ h.badge }} · {{ h.where }}</div>
+</div>
+<div style="font-size: 14px; font-weight: 700; color: #14213D">★ {{ h.rating }}</div>
+</button>
+</sc-for>
+</div>
+<div style="display: flex; gap: 10px; padding: 14px; border-radius: 14px; background: #FDE7EF">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A3124A" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+<div style="font-size: 14px; line-height: 1.5; color: #6E0C33">A Mesh helper will never ask for your passwords, bank details or gift cards.</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ HOME: GIVE HELP (locked) ============ -->
+<sc-if value="{{ isHomeGiveLocked }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 32px 20px; display: flex; flex-direction: column; gap: 20px">
+<div style="padding: 24px; border-radius: 20px; background: #14213D; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+<div style="width: 52px; height: 52px; border-radius: 14px; background: #22325A; display: flex; align-items: center; justify-content: center">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF5C93" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path><path d="M9 10l2 2 4-4"></path></svg>
+</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 24px; line-height: 1.2; font-weight: 700">Good with tech? Join the Mesh.</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9D2E8">Same account, same reputation. Help people over video from anywhere, or visit neighbors nearby.</p>
+<button onClick="{{ goHelperSetup }}" style="min-height: 52px; border: 0; border-radius: 14px; background: #FF5C93; color: #14213D; font-size: 16px; font-weight: 700; cursor: pointer">Become a helper</button>
+</div>
+<div style="font-size: 14px; color: #55607A; text-align: center">{{ requestCount }} people asked for tech help in the last hour</div>
+</div>
+</sc-if>
+
+<!-- ============ HOME: GIVE HELP (helper) ============ -->
+<sc-if value="{{ isHomeGive }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 22px 20px 28px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 15px; color: #55607A">Helper mode</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; line-height: 1.15; font-weight: 700">Open requests</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="padding: 14px; border-radius: 14px; background: #14213D; color: #FFFFFF">
+<div style="font-size: 13px; color: #C9D2E8">Offers sent</div>
+<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 26px; font-weight: 700">{{ offeredCount }}</div>
+</div>
+<div style="padding: 14px; border-radius: 14px; background: #FFFFFF; border: 1px solid #DDE2EE">
+<div style="font-size: 13px; color: #55607A">You help via</div>
+<div style="font-size: 15px; font-weight: 700; margin-top: 6px">{{ myFormats }}</div>
+</div>
+</div>
+<sc-for list="{{ requests }}" as="n" hint-placeholder-count="4">
+<div style="padding: 16px; border: 1px solid #DDE2EE; border-radius: 16px; background: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div style="font-size: 16px; font-weight: 600; line-height: 1.3">{{ n.title }}</div>
+<div style="font-size: 16px; font-weight: 700; color: #14213D; white-space: nowrap">{{ n.pay }}</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span style="{{ n.tagStyle }}">{{ n.formatLabel }}</span>
+<span style="font-size: 13px; color: #55607A">{{ n.meta }}</span>
+</div>
+<sc-if value="{{ n.isOffered }}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: #E8ECF5; color: #14213D; font-size: 15px; font-weight: 600">{{ n.offeredText }}</div>
+</sc-if>
+<sc-if value="{{ n.showSingle }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ n.offerMain }}" style="min-height: 44px; border: 1.5px solid #14213D; border-radius: 12px; background: #FFFFFF; color: #14213D; font-size: 15px; font-weight: 600; cursor: pointer">{{ n.mainLabel }}</button>
+</sc-if>
+<sc-if value="{{ n.showChoice }}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button onClick="{{ n.offerVideo }}" style="min-height: 44px; border: 0; border-radius: 12px; background: #D81B60; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">Offer video · $15</button>
+<button onClick="{{ n.offerVisit }}" style="min-height: 44px; border: 1.5px solid #14213D; border-radius: 12px; background: #FFFFFF; color: #14213D; font-size: 14px; font-weight: 600; cursor: pointer">Offer visit · $45</button>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- ============ POST A REQUEST ============ -->
+<sc-if value="{{ isPost }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 18px 20px 28px; display: flex; flex-direction: column; gap: 20px">
+<button onClick="{{ goHome }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #55607A; font-size: 15px; cursor: pointer">← Back</button>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; line-height: 1.15; font-weight: 700">Ask for help</h2>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">What do you need help with?</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ tasks }}" as="t" hint-placeholder-count="10">
+<button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}<sc-if value="{{ t.pro }}" hint-placeholder-val="{{ false }}"><span style="margin-left: 6px; padding: 2px 6px; border-radius: 6px; background: #14213D; color: #FFFFFF; font-size: 11px; font-weight: 700">PRO</span></sc-if></button>
+</sc-for>
+</div>
+<sc-if value="{{ pickHint }}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 14px; color: #B3261E; font-weight: 600">Pick what you need help with to continue.</div>
+</sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="pt-desc" style="font-size: 15px; font-weight: 700">Describe it</label>
+<textarea id="pt-desc" rows="3" placeholder="e.g. New iPhone, want my photos and contacts moved from my old Android" style="padding: 12px 14px; border: 1px solid #C7CEDF; border-radius: 12px; background: #FFFFFF; font-size: 15px; line-height: 1.45; color: #14213D; resize: none"></textarea>
+</div>
+<sc-if value="{{ showFormat }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">How would you like help?</div>
+<sc-for list="{{ formats }}" as="f" hint-placeholder-count="3">
+<button onClick="{{ f.pick }}" style="{{ f.style }}">
+<span style="display: flex; justify-content: space-between; gap: 8px; align-items: baseline">
+<span style="font-size: 16px; font-weight: 700; color: #14213D">{{ f.label }}</span>
+<span style="font-size: 14px; font-weight: 600; color: #14213D">{{ f.price }}</span>
+</span>
+<span style="display: block; font-size: 13px; line-height: 1.45; color: #55607A; margin-top: 3px">{{ f.desc }}</span>
+<sc-if value="{{ f.suggested }}" hint-placeholder-val="{{ false }}"><span style="display: inline-block; margin-top: 8px; padding: 3px 8px; border-radius: 6px; background: #FDE7EF; color: #A3124A; font-size: 12px; font-weight: 700">Suggested for this task</span></sc-if>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">When?</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-for list="{{ whens }}" as="w" hint-placeholder-count="3">
+<button onClick="{{ w.pick }}" style="{{ w.style }}">{{ w.label }}</button>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ isProTask }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 14px; border-radius: 14px; background: #E8ECF5; font-size: 14px; line-height: 1.5; color: #14213D"><strong>Heads up:</strong> this is a bigger job. We'll connect you with vetted IT pros.</div>
+</sc-if>
+<button onClick="{{ submitTask }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #D81B60; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer">Find a helper</button>
+</div>
+</sc-if>
+
+<!-- ============ MATCHES ============ -->
+<sc-if value="{{ isMatches }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 18px 20px 28px; display: flex; flex-direction: column; gap: 16px">
+<button onClick="{{ goPost }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #55607A; font-size: 15px; cursor: pointer">← Edit request</button>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 14px; color: #55607A">{{ taskLabel }} · {{ formatName }}</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; line-height: 1.15; font-weight: 700">{{ matchTitle }}</h2>
+</div>
+<sc-for list="{{ matches }}" as="h" hint-placeholder-count="3">
+<div style="padding: 16px; border: 1px solid #DDE2EE; border-radius: 18px; background: #FFFFFF; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="{{ h.avatarStyle }}">{{ h.initials }}</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 17px; font-weight: 700">{{ h.name }}</div>
+<div style="font-size: 13px; color: #55607A">★ {{ h.rating }} · {{ h.sessions }} sessions · {{ h.where }}</div>
+</div>
+</div>
+<sc-if value="{{ h.suggested }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 10px 12px; border-radius: 12px; background: #FDE7EF; font-size: 14px; line-height: 1.45; color: #6E0C33"><strong>{{ h.first }} suggests video instead:</strong> "I can likely fix this in about 20 minutes over a call."</div>
+</sc-if>
+<div style="font-size: 14px; line-height: 1.45; color: #3A4562">{{ h.tagline }}</div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #F6F7FB">
+<span style="{{ h.offerTagStyle }}">{{ h.offerLabel }}</span>
+<span style="font-size: 16px; font-weight: 700">{{ h.offerPrice }}</span>
+</div>
+<button onClick="{{ h.open }}" style="min-height: 46px; border: 0; border-radius: 12px; background: #14213D; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer">View profile</button>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- ============ HELPER PROFILE ============ -->
+<sc-if value="{{ isHelper }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column">
+<div style="padding: 14px 20px 22px; background: #14213D; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+<button onClick="{{ backFromHelper }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #C9D2E8; font-size: 15px; cursor: pointer">← Back</button>
+<div style="display: flex; align-items: center; gap: 14px">
+<div style="{{ sel.avatarLgStyle }}">{{ sel.initials }}</div>
+<div>
+<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 700; line-height: 1.15">{{ sel.name }}</div>
+<div style="font-size: 14px; color: #C9D2E8; margin-top: 4px">{{ sel.where }} · Helper since {{ sel.since }}</div>
+</div>
+</div>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #E4E9F5">{{ sel.bio }}</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 10px; border-radius: 12px; background: #22325A; text-align: center"><div style="font-size: 19px; font-weight: 700">★ {{ sel.rating }}</div><div style="font-size: 12px; color: #C9D2E8">rating</div></div>
+<div style="padding: 10px; border-radius: 12px; background: #22325A; text-align: center"><div style="font-size: 19px; font-weight: 700">{{ sel.sessions }}</div><div style="font-size: 12px; color: #C9D2E8">sessions</div></div>
+<div style="padding: 10px; border-radius: 12px; background: #22325A; text-align: center"><div style="font-size: 19px; font-weight: 700">{{ sel.repeatN }}</div><div style="font-size: 12px; color: #C9D2E8">rebooked by</div></div>
+</div>
+</div>
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Helps via</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ sel.formatTags }}" as="f" hint-placeholder-count="2">
+<span style="padding: 6px 10px; border-radius: 10px; background: #14213D; color: #FFFFFF; font-size: 13px; font-weight: 600">{{ f }}</span>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Earned badges</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ sel.badges }}" as="b" hint-placeholder-count="4">
+<span style="padding: 6px 10px; border-radius: 10px; background: #FDE7EF; color: #A3124A; font-size: 13px; font-weight: 600">{{ b }}</span>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Recent sessions</div>
+<sc-for list="{{ sel.work }}" as="w" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: #FFFFFF; border: 1px solid #DDE2EE">
+<span style="{{ w.tagStyle }}">{{ w.format }}</span>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 15px; font-weight: 600">{{ w.title }}</div>
+<div style="font-size: 13px; color: #55607A">★ {{ w.stars }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">What people say</div>
+<sc-for list="{{ sel.reviews }}" as="r" hint-placeholder-count="2">
+<div style="padding: 14px; border-radius: 14px; background: #FFFFFF; border: 1px solid #DDE2EE">
+<div style="font-size: 14px; line-height: 1.5; color: #3A4562">{{ r.text }}</div>
+<div style="font-size: 12px; color: #55607A; margin-top: 6px">{{ r.who }} · verified session</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ canBook }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ book }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #D81B60; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer">{{ bookLabel }}</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ BOOKED ============ -->
+<sc-if value="{{ isBooked }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 44px 24px 32px; display: flex; flex-direction: column; gap: 20px">
+<div style="width: 72px; height: 72px; border-radius: 999px; background: #FDE7EF; display: flex; align-items: center; justify-content: center; align-self: center">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D81B60" style="stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>
+</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; line-height: 1.15; font-weight: 700; text-align: center">{{ bookedTitle }}</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #55607A; text-align: center">{{ taskLabel }} · {{ whenLabel }}</p>
+<sc-if value="{{ hasCredit }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 12px 14px; border-radius: 12px; background: #E8ECF5; font-size: 14px; line-height: 1.45; color: #14213D">$15 from your video session is credited toward this visit. {{ guideNote }}</div>
+</sc-if>
+<div style="padding: 16px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DDE2EE; display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{ bookedSteps }}" as="st" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px"><span style="font-weight: 700; color: #D81B60">{{ st.n }}</span><span style="font-size: 14px; line-height: 1.45">{{ st.text }}</span></div>
+</sc-for>
+</div>
+<sc-if value="{{ bookedVirtual }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ goSession }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #D81B60; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer">Join video session</button>
+</sc-if>
+<button onClick="{{ goHome }}" style="min-height: 50px; border: 1px solid #C7CEDF; border-radius: 14px; background: #FFFFFF; color: #14213D; font-size: 16px; font-weight: 600; cursor: pointer">Back to home</button>
+</div>
+</sc-if>
+
+<!-- ============ VIDEO SESSION ============ -->
+<sc-if value="{{ isSession }}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 844px; box-sizing: border-box; background: #0E1730; color: #FFFFFF; padding: 20px 20px 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #C9D2E8"><span style="width: 8px; height: 8px; border-radius: 999px; background: #FF5C93; display: inline-block"></span>Mesh secure session · 12:48</div>
+<div style="font-size: 13px; color: #C9D2E8">Screen shared</div>
+</div>
+<div style="height: 260px; border-radius: 20px; background: #22325A; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; position: relative">
+<div style="{{ sel.avatarLgStyle }}">{{ sel.initials }}</div>
+<div style="font-size: 17px; font-weight: 600">{{ sel.name }}</div>
+<div style="font-size: 13px; color: #C9D2E8">{{ sel.where }}</div>
+<div style="position: absolute; right: 12px; bottom: 12px; width: 76px; height: 100px; border-radius: 12px; background: #3D4F7C; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #E4E9F5">You</div>
+</div>
+<div style="padding: 12px 14px; border-radius: 14px; background: #3A1023; display: flex; gap: 10px; align-items: flex-start">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8FB4" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+<div style="font-size: 14px; line-height: 1.45; color: #FFD6E4">{{ sel.first }} will never ask for your passwords. When a password is needed, you type it yourself.</div>
+</div>
+<div style="padding: 14px; border-radius: 16px; background: #FFFFFF; color: #14213D; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 13px; font-weight: 700; color: #55607A">{{ sel.first }} says</div>
+<div style="font-size: 15px; line-height: 1.5">"Your phone's fine. The problem is your router is in the basement, so the signal can't reach upstairs. Someone should install a mesh extender in person."</div>
+</div>
+<div style="flex: 1"></div>
+<button onClick="{{ goTransfer }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #FF5C93; color: #14213D; font-size: 17px; font-weight: 700; cursor: pointer">Get in-person help</button>
+<button onClick="{{ goReview }}" style="min-height: 50px; border: 1px solid #3D4F7C; border-radius: 14px; background: transparent; color: #FFFFFF; font-size: 16px; font-weight: 600; cursor: pointer">Problem solved, end session</button>
+</div>
+</sc-if>
+
+<!-- ============ TRANSFER TO IN PERSON ============ -->
+<sc-if value="{{ isTransfer }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 18px 20px 28px; display: flex; flex-direction: column; gap: 18px">
+<button onClick="{{ goSession }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #55607A; font-size: 15px; cursor: pointer">← Back to session</button>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #D81B60">Moving to in person</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 26px; line-height: 1.2; font-weight: 700">A local helper picks up where {{ sel.first }} left off</h2>
+</div>
+<div style="padding: 16px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DDE2EE; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 13px; font-weight: 700; color: #55607A">{{ sel.first }}'s notes, sent with your request</div>
+<div style="font-size: 14px; line-height: 1.5; color: #3A4562">Router in basement, weak signal on 2nd floor. Phone and laptop work fine. Recommend a mesh extender on the stairs landing. Customer has the extender box already.</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<span style="padding: 4px 8px; border-radius: 8px; background: #E8ECF5; font-size: 12px; font-weight: 600">2 screenshots</span>
+<span style="padding: 4px 8px; border-radius: 8px; background: #E8ECF5; font-size: 12px; font-weight: 600">Device list</span>
+</div>
+</div>
+<button onClick="{{ toggleGuide }}" style="{{ guideStyle }}">
+<span style="{{ guideBoxStyle }}"><sc-if value="{{ guideOn }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" style="stroke-width: 3; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if></span>
+<span style="flex: 1; text-align: left"><span style="display: block; font-size: 15px; font-weight: 600; color: #14213D">Keep {{ sel.first }} on video during the visit</span><span style="display: block; font-size: 13px; color: #55607A">Guides the local helper · +$10</span></span>
+</button>
+<div style="font-size: 15px; font-weight: 700">Local helpers near you</div>
+<sc-for list="{{ locals }}" as="h" hint-placeholder-count="2">
+<div style="padding: 14px; border: 1px solid #DDE2EE; border-radius: 16px; background: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="{{ h.avatarStyle }}">{{ h.initials }}</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 16px; font-weight: 700">{{ h.name }}</div>
+<div style="font-size: 13px; color: #55607A">★ {{ h.rating }} · {{ h.where }} · {{ h.avail }}</div>
+</div>
+<div style="font-size: 16px; font-weight: 700">$30</div>
+</div>
+<button onClick="{{ h.bookVisit }}" style="min-height: 46px; border: 0; border-radius: 12px; background: #14213D; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer">Book {{ h.first }}</button>
+</div>
+</sc-for>
+<div style="font-size: 13px; line-height: 1.5; color: #55607A; text-align: center">$45 visit, minus your $15 video session credit.</div>
+</div>
+</sc-if>
+
+<!-- ============ REVIEW ============ -->
+<sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 44px 24px 32px; display: flex; flex-direction: column; gap: 20px">
+<div style="{{ sel.avatarLgStyle }}; align-self: center">{{ sel.initials }}</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 26px; line-height: 1.2; font-weight: 700; text-align: center">How was your session with {{ sel.first }}?</h2>
+<div style="display: flex; justify-content: center; gap: 6px">
+<sc-for list="{{ stars }}" as="st" hint-placeholder-count="5">
+<button onClick="{{ st.pick }}" aria-label="{{ st.aria }}" style="{{ st.style }}">★</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center">
+<span style="padding: 6px 10px; border-radius: 10px; background: #FDE7EF; color: #A3124A; font-size: 13px; font-weight: 600">Patient</span>
+<span style="padding: 6px 10px; border-radius: 10px; background: #FDE7EF; color: #A3124A; font-size: 13px; font-weight: 600">Explained clearly</span>
+<span style="padding: 6px 10px; border-radius: 10px; background: #FDE7EF; color: #A3124A; font-size: 13px; font-weight: 600">Accurate diagnosis</span>
+</div>
+<label for="rv-text" style="font-size: 15px; font-weight: 700">Leave a note (optional)</label>
+<textarea id="rv-text" rows="3" placeholder="What did they do well?" style="padding: 12px 14px; border: 1px solid #C7CEDF; border-radius: 12px; background: #FFFFFF; font-size: 15px; color: #14213D; resize: none"></textarea>
+<div style="font-size: 13px; line-height: 1.5; color: #55607A; text-align: center">Reviews are revealed once you've both submitted, so they stay honest.</div>
+<button onClick="{{ goHome }}" style="min-height: 54px; border: 0; border-radius: 14px; background: #D81B60; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer">Submit review</button>
+</div>
+</sc-if>
+
+<!-- ============ PRO HAND-OFF ============ -->
+<sc-if value="{{ isHandoff }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 18px 20px 28px; display: flex; flex-direction: column; gap: 18px">
+<button onClick="{{ goPost }}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #55607A; font-size: 15px; cursor: pointer">← Edit request</button>
+<div style="padding: 18px; border-radius: 18px; background: #14213D; color: #FFFFFF; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #FFC2D6">Needs an IT pro</div>
+<h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 24px; line-height: 1.2; font-weight: 700">This one's bigger than a quick fix</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9D2E8">{{ taskLabel }} usually needs a licensed installer. We'll connect you with vetted local IT pros.</p>
+</div>
+<sc-for list="{{ pros }}" as="p" hint-placeholder-count="2">
+<div style="padding: 16px; border: 1px solid #DDE2EE; border-radius: 18px; background: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<div style="font-size: 17px; font-weight: 700">{{ p.name }}</div>
+<span style="padding: 3px 8px; border-radius: 6px; background: #E8ECF5; color: #3A4562; font-size: 11px; font-weight: 700">SPONSORED</span>
+</div>
+<div style="font-size: 13px; color: #55607A">★ {{ p.rating }} · {{ p.meta }}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="padding: 4px 8px; border-radius: 8px; background: #FDE7EF; color: #A3124A; font-size: 12px; font-weight: 600">Licensed</span>
+<span style="padding: 4px 8px; border-radius: 8px; background: #FDE7EF; color: #A3124A; font-size: 12px; font-weight: 600">Insured</span>
+<span style="padding: 4px 8px; border-radius: 8px; background: #FDE7EF; color: #A3124A; font-size: 12px; font-weight: 600">Vetted by Mesh</span>
+</div>
+<sc-if value="{{ p.sent }}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: #E8ECF5; color: #14213D; font-size: 15px; font-weight: 600">Quote requested · details sent</div>
+</sc-if>
+<sc-if value="{{ p.notSent }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ p.request }}" style="min-height: 46px; border: 0; border-radius: 12px; background: #14213D; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer">Request a quote</button>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- ============ MY PROFILE ============ -->
+<sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column">
+<div style="padding: 22px 20px 18px; background: #FFFFFF; border-bottom: 1px solid #DDE2EE; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 14px">
+<div style="width: 64px; height: 64px; border-radius: 999px; background: #14213D; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700">{{ myInitial }}</div>
+<div>
+<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 700">{{ displayName }}</div>
+<div style="font-size: 14px; color: #55607A">Oak Park, IL · Member since Oct 2026</div>
+</div>
+</div>
+<div style="display: flex; background: #E8ECF5; border-radius: 12px; padding: 4px; gap: 4px">
+<button onClick="{{ tabNeighbor }}" style="{{ tabNeighborStyle }}">Getting help</button>
+<button onClick="{{ tabHelper }}" style="{{ tabHelperStyle }}">As a helper</button>
+</div>
+</div>
+<sc-if value="{{ isTabNeighbor }}" hint-placeholder-val="{{ true }}">
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DDE2EE; text-align: center"><div style="font-size: 19px; font-weight: 700">★ 5.0</div><div style="font-size: 12px; color: #55607A">from helpers</div></div>
+<div style="padding: 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DDE2EE; text-align: center"><div style="font-size: 19px; font-weight: 700">4</div><div style="font-size: 12px; color: #55607A">sessions</div></div>
+<div style="padding: 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DDE2EE; text-align: center"><div style="font-size: 19px; font-weight: 700">100%</div><div style="font-size: 12px; color: #55607A">on time</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="padding: 6px 10px; border-radius: 10px; background: #FDE7EF; color: #A3124A; font-size: 13px; font-weight: 600">Clear descriptions</span>
+<span style="padding: 6px 10px; border-radius: 10px; background: #FDE7EF; color: #A3124A; font-size: 13px; font-weight: 600">Pays promptly</span>
+<span style="padding: 6px 10px; border-radius: 10px; background: #FDE7EF; color: #A3124A; font-size: 13px; font-weight: 600">Phone verified</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Your go-to helpers</div>
+<sc-for list="{{ helpers }}" as="h" hint-placeholder-count="2">
+<button onClick="{{ h.open }}" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #DDE2EE; border-radius: 14px; background: #FFFFFF; text-align: left; cursor: pointer">
+<div style="{{ h.avatarStyle }}">{{ h.initials }}</div>
+<div style="flex: 1"><div style="font-size: 15px; font-weight: 600; color: #14213D">{{ h.name }}</div><div style="font-size: 13px; color: #55607A">{{ h.badge }}</div></div>
+<span style="font-size: 13px; font-weight: 700; color: #D81B60">Rebook</span>
+</button>
+</sc-for>
+</div>
+<div style="display: flex; gap: 10px; padding: 14px; border-radius: 14px; background: #E8ECF5">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3A4562" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+<div style="font-size: 13px; line-height: 1.5; color: #3A4562">Helpers see your reputation, never your request history or devices.</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isTabHelperLocked }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 20px">
+<div style="padding: 20px; border-radius: 18px; background: #FFFFFF; border: 1px solid #DDE2EE; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 18px; font-weight: 700">Start your helper profile</div>
+<div style="font-size: 14px; line-height: 1.5; color: #55607A">Your sessions, earned badges and reviews build a profile people can browse and rebook.</div>
+<button onClick="{{ goHelperSetup }}" style="min-height: 50px; border: 0; border-radius: 12px; background: #D81B60; color: #FFFFFF; font-size: 16px; font-weight: 600; cursor: pointer">Become a helper</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isTabHelper }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DDE2EE; text-align: center"><div style="font-size: 17px; font-weight: 700">New</div><div style="font-size: 12px; color: #55607A">rating</div></div>
+<div style="padding: 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DDE2EE; text-align: center"><div style="font-size: 17px; font-weight: 700">0</div><div style="font-size: 12px; color: #55607A">sessions</div></div>
+<div style="padding: 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DDE2EE; text-align: center"><div style="font-size: 17px; font-weight: 700">{{ offeredCount }}</div><div style="font-size: 12px; color: #55607A">offers out</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Helps via</div>
+<div style="font-size: 15px; color: #3A4562">{{ myFormats }}</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; font-weight: 700">Skills</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ mySkills }}" as="s" hint-placeholder-count="3">
+<span style="padding: 6px 10px; border-radius: 10px; background: #E8ECF5; color: #14213D; font-size: 13px; font-weight: 600">{{ s }}</span>
+</sc-for>
+</div>
+</div>
+<div style="padding: 18px; border-radius: 14px; border: 1.5px dashed #A9B3CC; font-size: 14px; line-height: 1.5; color: #55607A; text-align: center">Your profile starts here. Each session adds a review and progress toward badges like "Patient with beginners" and "Accurate diagnosis."</div>
+</div>
+</sc-if>
+<div style="padding: 4px 20px 28px">
+<button onClick="{{ restart }}" style="width: 100%; min-height: 48px; border: 1px solid #C7CEDF; border-radius: 12px; background: #FFFFFF; color: #B3261E; font-size: 15px; font-weight: 600; cursor: pointer">Sign out and restart prototype</button>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<!-- ============ BOTTOM NAV ============ -->
+<sc-if value="{{ showNav }}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #DDE2EE; background: #FFFFFF; padding: 6px 8px 20px">
+<button onClick="{{ goHome }}" style="{{ navHomeStyle }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path></svg>
+<span>Home</span>
+</button>
+<button onClick="{{ goPost }}" style="{{ navPostStyle }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v8M8 12h8"></path></svg>
+<span>Ask for help</span>
+</button>
+<button onClick="{{ goProfile }}" style="{{ navProfileStyle }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>
+<span>Profile</span>
+</button>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+var NAVY = '#14213D';
+var PINK = '#D81B60';
+
+var TASKS = [
+  { id: 'phone', label: 'New phone or tablet', suggest: 'virtual' },
+  { id: 'wifi', label: 'Slow or spotty Wi-Fi', suggest: 'either' },
+  { id: 'tv', label: 'Smart TV & streaming', suggest: 'inperson' },
+  { id: 'video', label: 'Video calling', suggest: 'virtual' },
+  { id: 'printer', label: 'Printer won’t connect', suggest: 'either' },
+  { id: 'smarthome', label: 'Doorbell or thermostat', suggest: 'inperson' },
+  { id: 'scam', label: 'Is this a scam?', suggest: 'virtual' },
+  { id: 'computer', label: 'Slow computer', suggest: 'virtual' },
+  { id: 'cabling', label: 'Network wiring', pro: true },
+  { id: 'cameras', label: 'Security cameras', pro: true }
+];
+
+var QUICK = [
+  { id: 'phone', label: 'Set up a new phone', price: 'Video from $15' },
+  { id: 'wifi', label: 'Fix slow Wi-Fi', price: 'Video or visit' },
+  { id: 'tv', label: 'Smart TV setup', price: 'Visit from $40' },
+  { id: 'scam', label: 'Check a suspicious text', price: 'Video from $10' }
+];
+
+var FORMATS = [
+  { id: 'virtual', label: 'Video call', price: 'From $15', desc: 'A helper from anywhere in the U.S. joins you on a secure call and shares your screen.' },
+  { id: 'inperson', label: 'In person', price: 'From $40', desc: 'A background-checked helper near you comes to your home.' },
+  { id: 'either', label: 'Let the helper decide', price: '$15–$45', desc: 'Not sure? Helpers suggest the best way. You approve before booking.' }
+];
+var FORMAT_NAMES = { virtual: 'Video call', inperson: 'In person', either: 'Helper decides' };
+
+var WHENS = [
+  { id: 'now', label: 'Right now' },
+  { id: 'today', label: 'Later today' },
+  { id: 'week', label: 'This week' }
+];
+
+var SKILLS = [
+  { id: 'phone', label: 'Phones & tablets' },
+  { id: 'wifi', label: 'Wi-Fi & internet' },
+  { id: 'computer', label: 'Computers' },
+  { id: 'tv', label: 'TV & streaming' },
+  { id: 'smarthome', label: 'Smart home' },
+  { id: 'printer', label: 'Printers' },
+  { id: 'video', label: 'Video calls' },
+  { id: 'scam', label: 'Scam & security checks' }
+];
+
+var HELPERS = [
+  {
+    id: 'priya', name: 'Priya Shah', first: 'Priya', initials: 'PS', bg: PINK,
+    rating: '4.9', sessions: 212, repeatN: 38, where: 'Austin, TX', since: '2025',
+    virtual: true, inperson: false, local: false,
+    badge: 'Remote Pro', avail: 'Online now',
+    tagline: 'Former Apple Store trainer. Explains things slowly and writes down the steps for you.',
+    bio: 'I spent six years teaching people their devices at an Apple Store. Now I help from home, and nobody is ever too far behind for me.',
+    badges: ['Remote Pro · 200+ sessions', 'Patient with beginners', 'Accurate diagnosis · 14 hand-offs', 'ID verified'],
+    work: [
+      { title: 'Moved photos to a new iPhone', format: 'Video', stars: '5.0' },
+      { title: 'Set up FaceTime with the grandkids', format: 'Video', stars: '5.0' },
+      { title: 'Spotted a fake bank text', format: 'Video', stars: '5.0' }
+    ],
+    reviews: [
+      { text: 'So patient with my dad. She even emailed him the steps afterward.', who: 'Karen L. for her father' },
+      { text: 'Fixed my email in 15 minutes. Rebooked her twice since.', who: 'Tom W.' }
+    ]
+  },
+  {
+    id: 'jules', name: 'Jules Park', first: 'Jules', initials: 'JP', bg: NAVY,
+    rating: '4.8', sessions: 96, repeatN: 17, where: '0.6 mi away', since: '2026',
+    virtual: true, inperson: true, local: true,
+    badge: 'Wi-Fi Pro', avail: 'Tomorrow 2pm',
+    tagline: 'Engineering student nearby. Great with Wi-Fi, smart TVs and smart home gear.',
+    bio: 'Computer engineering student who grew up as the family tech support. Happy to hop on a call or come by.',
+    badges: ['Wi-Fi Pro · 31 sessions', 'Smart Home Pro · 12 visits', 'ID verified', 'Background checked'],
+    work: [
+      { title: 'Installed a mesh Wi-Fi system', format: 'Visit', stars: '5.0' },
+      { title: 'Set up a smart TV and streaming apps', format: 'Visit', stars: '4.9' },
+      { title: 'Fixed a printer connection', format: 'Video', stars: '4.7' }
+    ],
+    reviews: [
+      { text: 'Wi-Fi finally works upstairs. Jules explained everything he did.', who: 'Gloria M.' }
+    ]
+  },
+  {
+    id: 'ray', name: 'Ray Thompson', first: 'Ray', initials: 'RT', bg: '#6B3FA0',
+    rating: '4.9', sessions: 64, repeatN: 21, where: '1.4 mi away', since: '2025',
+    virtual: false, inperson: true, local: true,
+    badge: 'Patient with beginners', avail: 'Friday 10am',
+    tagline: 'Retired IT manager. Prefers to sit down with you and do it together.',
+    bio: 'Thirty years running IT for a hospital. These days I like helping neighbors get comfortable with their gadgets.',
+    badges: ['Patient with beginners', 'TV Pro · 19 visits', 'ID verified', 'Background checked'],
+    work: [
+      { title: 'Set up a video doorbell', format: 'Visit', stars: '5.0' },
+      { title: 'Taught tablet basics', format: 'Visit', stars: '5.0' }
+    ],
+    reviews: [
+      { text: 'Ray treated my mother with so much respect. She calls him her tech guy now.', who: 'Denise R. for her mother' }
+    ]
+  }
+];
+
+var REQUESTS = [
+  { id: 'r1', title: 'Set up email on a new iPad', format: 'virtual', pay: '$15', meta: 'Columbus, OH · now' },
+  { id: 'r2', title: 'Streaming apps on a new TV', format: 'inperson', pay: '$45', meta: '0.8 mi · today' },
+  { id: 'r3', title: 'Printer says it’s offline', format: 'either', pay: '$15–45', meta: '1.1 mi · this week' },
+  { id: 'r4', title: 'Is this text from my bank real?', format: 'virtual', pay: '$10', meta: 'Tampa, FL · now' }
+];
+
+var PROS = [
+  { id: 'p1', name: 'Clearpath IT Services', rating: '4.9', meta: 'Network &amp; cabling · 12 yrs' },
+  { id: 'p2', name: 'Lakeshore Security Tech', rating: '4.8', meta: 'Cameras &amp; alarms · 9 yrs' }
+];
+PROS[0].meta = 'Network & cabling · 12 yrs';
+PROS[1].meta = 'Cameras & alarms · 9 yrs';
+
+function tagStyle(format) {
+  var base = 'display: inline-block; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 700; white-space: nowrap; ';
+  if (format === 'virtual') return base + 'background: #FDE7EF; color: #A3124A';
+  if (format === 'inperson') return base + 'background: #14213D; color: #FFFFFF';
+  return base + 'background: #E8ECF5; color: #14213D';
+}
+
+function chip(selected) {
+  return 'min-height: 44px; padding: 0 14px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; ' +
+    (selected ? 'border: 1.5px solid ' + NAVY + '; background: ' + NAVY + '; color: #FFFFFF' : 'border: 1px solid #C7CEDF; background: #FFFFFF; color: #14213D');
+}
+
+function pill(selected) {
+  return 'min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; ' +
+    (selected ? 'background: ' + PINK + '; color: #FFFFFF' : 'background: transparent; color: #3A4562');
+}
+
+function tab(selected) {
+  return 'flex: 1; min-height: 44px; border: 0; border-radius: 9px; font-size: 14px; font-weight: 600; cursor: pointer; ' +
+    (selected ? 'background: #FFFFFF; color: #14213D; box-shadow: 0 1px 2px rgba(20,33,61,0.12)' : 'background: transparent; color: #3A4562');
+}
+
+function card(selected) {
+  return 'width: 100%; padding: 16px; border-radius: 16px; cursor: pointer; text-align: left; background: #FFFFFF; ' +
+    (selected ? 'border: 2px solid ' + PINK : 'border: 1px solid #DDE2EE');
+}
+
+function nav(selected) {
+  return 'min-height: 56px; border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 600; cursor: pointer; color: ' +
+    (selected ? PINK : '#55607A');
+}
+
+function avatar(bg, size) {
+  return 'width: ' + size + 'px; height: ' + size + 'px; border-radius: 999px; background: ' + bg + '; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: ' + Math.round(size / 3) + 'px; font-weight: 700; flex-shrink: 0';
+}
+
+function initialState() {
+  return {
+    screen: 'welcome', role: 'need', mode: 'need', helperOn: false, name: '',
+    task: null, format: 'either', when: 'today', pickHint: false,
+    helperId: 'priya', helperBack: 'home', offerFormat: 'virtual', bookedFormat: 'virtual',
+    transferred: false, guide: false, rating: 5,
+    offered: {}, tab: 'neighbor', skills: { phone: true, wifi: true }, helpVirtual: true, helpInPerson: false,
+    quotes: {}, setupBack: 'home'
+  };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = initialState();
+  }
+
+  renderVals() {
+    var s = this.state;
+    var self = this;
+    var go = function (screen) { return function () { self.setState({ screen: screen }); }; };
+
+    var task = null;
+    for (var i = 0; i < TASKS.length; i++) if (TASKS[i].id === s.task) task = TASKS[i];
+    var sel = HELPERS[0];
+    for (var j = 0; j < HELPERS.length; j++) if (HELPERS[j].id === s.helperId) sel = HELPERS[j];
+    var whenLabel = 'Later today';
+    for (var k = 0; k < WHENS.length; k++) if (WHENS[k].id === s.when) whenLabel = WHENS[k].label;
+
+    var name = (s.name || '').trim();
+    var first = name ? name.split(' ')[0] : 'there';
+    var authScreens = ['welcome', 'role', 'signup'];
+    var signedIn = authScreens.indexOf(s.screen) === -1;
+    var fullScreen = s.screen === 'session';
+    var homeish = s.screen === 'home';
+    var offeredCount = Object.keys(s.offered).length;
+    var suggest = task && !task.pro ? task.suggest : 'either';
+
+    var openHelper = function (h, fmt) {
+      return function () { self.setState({ helperId: h.id, helperBack: s.screen, offerFormat: fmt, screen: 'helper' }); };
+    };
+
+    var helpers = HELPERS.map(function (h) {
+      return Object.assign({}, h, {
+        avatarStyle: avatar(h.bg, 48),
+        open: openHelper(h, h.virtual ? 'virtual' : 'inperson')
+      });
+    });
+    var onlineHelpers = helpers.filter(function (h) { return h.virtual; });
+
+    var matches = [];
+    HELPERS.forEach(function (h) {
+      var offer = null, suggested = false;
+      if (s.format === 'virtual') { if (h.virtual) offer = 'virtual'; }
+      else if (s.format === 'inperson') {
+        if (h.inperson) offer = 'inperson';
+        else if (h.virtual && suggest !== 'inperson') { offer = 'virtual'; suggested = true; }
+      } else {
+        offer = (h.virtual && suggest !== 'inperson') ? 'virtual' : (h.inperson ? 'inperson' : 'virtual');
+      }
+      if (!offer) return;
+      matches.push(Object.assign({}, h, {
+        avatarStyle: avatar(h.bg, 48),
+        suggested: suggested,
+        offerLabel: offer === 'virtual' ? 'Video call' : 'Home visit',
+        offerTagStyle: tagStyle(offer),
+        offerPrice: offer === 'virtual' ? '$15' : '$45',
+        open: openHelper(h, offer)
+      }));
+    });
+
+    var locals = HELPERS.filter(function (h) { return h.inperson && h.local; }).map(function (h) {
+      return Object.assign({}, h, {
+        avatarStyle: avatar(h.bg, 48),
+        bookVisit: function () { self.setState({ transferLocalId: h.id, bookedFormat: 'inperson', transferred: true, screen: 'booked' }); }
+      });
+    });
+
+    var bookedHelper = sel;
+    if (s.transferred && s.transferLocalId) {
+      for (var m = 0; m < HELPERS.length; m++) if (HELPERS[m].id === s.transferLocalId) bookedHelper = HELPERS[m];
+    }
+    var bookedVirtual = s.bookedFormat === 'virtual';
+    var bookedSteps = bookedVirtual ? [
+      { n: '1', text: 'Join from this app at your booked time. No other apps to install.' },
+      { n: '2', text: bookedHelper.first + ' can see your screen only when you share it, and will never ask for passwords.' },
+      { n: '3', text: 'If it turns out you need hands-on help, we’ll move you to a local helper with ' + bookedHelper.first + '’s notes.' }
+    ] : [
+      { n: '1', text: 'Payment is held by Mesh and released when you mark the job done.' },
+      { n: '2', text: 'Your address is shared with ' + bookedHelper.first + ' only after you’re both confirmed.' },
+      { n: '3', text: 'Afterward you both leave reviews. Neither sees the other’s until both are in.' }
+    ];
+
+    var requests = REQUESTS.map(function (r) {
+      var off = s.offered[r.id];
+      var canVideo = s.helpVirtual, canVisit = s.helpInPerson;
+      var choice = r.format === 'either' && !off;
+      var mainLabel = r.format === 'virtual' ? 'Offer video help' : 'Offer a home visit';
+      var mainFmt = r.format === 'virtual' ? 'video' : 'visit';
+      if (r.format === 'inperson' && !canVisit && canVideo) { mainLabel = 'Suggest video instead'; mainFmt = 'video'; }
+      var setOff = function (v) { return function () { var o = Object.assign({}, self.state.offered); o[r.id] = v; self.setState({ offered: o }); }; };
+      return Object.assign({}, r, {
+        formatLabel: FORMAT_NAMES[r.format], tagStyle: tagStyle(r.format),
+        isOffered: !!off, showSingle: !off && !choice, showChoice: choice,
+        offeredText: off === 'video' ? 'Video offer sent · waiting for reply' : 'Visit offer sent · waiting for reply',
+        mainLabel: mainLabel, offerMain: setOff(mainFmt),
+        offerVideo: setOff('video'), offerVisit: setOff('visit')
+      });
+    });
+
+    var fmts = [];
+    if (s.helpVirtual) fmts.push('Video');
+    if (s.helpInPerson) fmts.push('In person');
+
+    var pros = PROS.map(function (p) {
+      var sent = !!s.quotes[p.id];
+      return Object.assign({}, p, {
+        sent: sent, notSent: !sent,
+        request: function () { var q = Object.assign({}, self.state.quotes); q[p.id] = true; self.setState({ quotes: q }); }
+      });
+    });
+
+    var formatTags = [];
+    if (sel.virtual) formatTags.push('Video calls · nationwide');
+    if (sel.inperson) formatTags.push('Home visits · local');
+
+    var goPost = function () { self.setState({ screen: 'post', mode: 'need', pickHint: false }); };
+
+    return {
+      showTopBar: signedIn && !fullScreen,
+      showNav: signedIn && !fullScreen,
+      isWelcome: s.screen === 'welcome',
+      isRole: s.screen === 'role',
+      isSignup: s.screen === 'signup',
+      isHelperSetup: s.screen === 'helperSetup',
+      isHomeNeed: homeish && s.mode === 'need',
+      isHomeGiveLocked: homeish && s.mode === 'give' && !s.helperOn,
+      isHomeGive: homeish && s.mode === 'give' && s.helperOn,
+      isPost: s.screen === 'post',
+      isMatches: s.screen === 'matches',
+      isHelper: s.screen === 'helper',
+      isBooked: s.screen === 'booked',
+      isSession: s.screen === 'session',
+      isTransfer: s.screen === 'transfer',
+      isReview: s.screen === 'review',
+      isHandoff: s.screen === 'handoff',
+      isProfile: s.screen === 'profile',
+
+      restart: function () { self.setState(initialState()); },
+      roleIsGive: s.role === 'give',
+      needCardStyle: card(s.role === 'need'),
+      giveCardStyle: card(s.role === 'give'),
+      needTabStyle: pill(s.mode === 'need'),
+      giveTabStyle: pill(s.mode === 'give'),
+      toNeed: function () { self.setState({ mode: 'need', screen: 'home' }); },
+      toGive: function () { self.setState({ mode: 'give', screen: 'home' }); },
+
+      goWelcome: go('welcome'),
+      goRole: go('role'),
+      goSignup: go('signup'),
+      goHome: function () { self.setState({ screen: 'home', transferred: false, guide: false }); },
+      goProfile: go('profile'),
+      goPost: goPost,
+      goSession: go('session'),
+      goTransfer: go('transfer'),
+      goReview: go('review'),
+      goHelperSetup: function () { self.setState({ screen: 'helperSetup', setupBack: s.screen }); },
+      leaveHelperSetup: function () { self.setState({ screen: s.setupBack || 'home' }); },
+      pickNeed: function () { self.setState({ role: 'need' }); },
+      pickGive: function () { self.setState({ role: 'give' }); },
+      setName: function (e) { self.setState({ name: e.target.value }); },
+      finishSignup: function () {
+        if (s.role === 'give') self.setState({ screen: 'helperSetup', setupBack: 'signup' });
+        else self.setState({ screen: 'home', mode: 'need' });
+      },
+      finishHelper: function () { self.setState({ helperOn: true, mode: 'give', screen: 'home', tab: 'helper' }); },
+
+      firstName: first,
+      displayName: name || 'You',
+      myInitial: (name || 'Y').charAt(0).toUpperCase(),
+
+      skills: SKILLS.map(function (sk) {
+        return {
+          label: sk.label, style: chip(!!s.skills[sk.id]),
+          toggle: function () { var m2 = Object.assign({}, self.state.skills); m2[sk.id] = !m2[sk.id]; self.setState({ skills: m2 }); }
+        };
+      }),
+      mySkills: SKILLS.filter(function (sk) { return s.skills[sk.id]; }).map(function (sk) { return sk.label; }),
+      helpVirtualStyle: card(s.helpVirtual),
+      helpInPersonStyle: card(s.helpInPerson),
+      toggleHelpVirtual: function () { self.setState({ helpVirtual: !self.state.helpVirtual }); },
+      toggleHelpInPerson: function () { self.setState({ helpInPerson: !self.state.helpInPerson }); },
+      myFormats: fmts.length ? fmts.join(' + ') : 'Pick a format',
+
+      quickTasks: QUICK.map(function (q) {
+        var t = null; for (var x = 0; x < TASKS.length; x++) if (TASKS[x].id === q.id) t = TASKS[x];
+        return Object.assign({}, q, { start: function () { self.setState({ task: q.id, format: t.suggest, screen: 'post', mode: 'need', pickHint: false }); } });
+      }),
+      helpers: onlineHelpers,
+      requests: requests,
+      offeredCount: offeredCount,
+      requestCount: 23,
+
+      tasks: TASKS.map(function (t) {
+        return {
+          label: t.label, pro: !!t.pro, style: chip(s.task === t.id),
+          pick: function () { self.setState({ task: t.id, format: t.pro ? self.state.format : t.suggest, pickHint: false }); }
+        };
+      }),
+      showFormat: !(task && task.pro),
+      isProTask: !!(task && task.pro),
+      formats: FORMATS.map(function (f) {
+        return Object.assign({}, f, {
+          style: card(s.format === f.id),
+          suggested: !!task && !task.pro && task.suggest === f.id,
+          pick: function () { self.setState({ format: f.id }); }
+        });
+      }),
+      whens: WHENS.map(function (w) {
+        return { label: w.label, style: chip(s.when === w.id), pick: function () { self.setState({ when: w.id }); } };
+      }),
+      pickHint: s.pickHint,
+      taskLabel: task ? task.label : 'Your request',
+      whenLabel: whenLabel,
+      formatName: FORMAT_NAMES[s.format],
+      submitTask: function () {
+        if (!task) { self.setState({ pickHint: true }); return; }
+        self.setState({ screen: task.pro ? 'handoff' : 'matches' });
+      },
+
+      matches: matches,
+      matchTitle: matches.length + (matches.length === 1 ? ' helper can help' : ' helpers can help'),
+
+      sel: Object.assign({}, sel, { avatarLgStyle: avatar(sel.bg, 72), formatTags: formatTags }),
+      backFromHelper: function () { self.setState({ screen: s.helperBack === 'helper' ? 'matches' : s.helperBack }); },
+      canBook: true,
+      bookLabel: s.offerFormat === 'virtual' ? 'Book a video call with ' + sel.first : 'Book a home visit with ' + sel.first,
+      book: function () { self.setState({ screen: 'booked', bookedFormat: s.offerFormat, transferred: false }); },
+
+      bookedVirtual: bookedVirtual,
+      bookedTitle: bookedVirtual ? 'Video call with ' + bookedHelper.first + ' is set' : bookedHelper.first + ' is coming by',
+      bookedSteps: bookedSteps,
+      hasCredit: !!s.transferred,
+      guideNote: s.guide ? sel.first + ' will join by video to guide.' : '',
+
+      locals: locals,
+      guideOn: !!s.guide,
+      toggleGuide: function () { self.setState({ guide: !self.state.guide }); },
+      guideStyle: 'display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; cursor: pointer; background: #FFFFFF; ' + (s.guide ? 'border: 2px solid ' + PINK : 'border: 1px solid #DDE2EE'),
+      guideBoxStyle: 'width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; ' + (s.guide ? 'background: ' + PINK : 'border: 2px solid #A9B3CC; box-sizing: border-box'),
+
+      stars: [1, 2, 3, 4, 5].map(function (n) {
+        return {
+          aria: n + ' star' + (n > 1 ? 's' : ''),
+          style: 'width: 48px; height: 48px; border: 0; background: transparent; cursor: pointer; font-size: 34px; line-height: 1; color: ' + (n <= s.rating ? PINK : '#C7CEDF'),
+          pick: function () { self.setState({ rating: n }); }
+        };
+      }),
+
+      pros: pros,
+
+      isTabNeighbor: s.tab === 'neighbor',
+      isTabHelper: s.tab === 'helper' && s.helperOn,
+      isTabHelperLocked: s.tab === 'helper' && !s.helperOn,
+      tabNeighborStyle: tab(s.tab === 'neighbor'),
+      tabHelperStyle: tab(s.tab === 'helper'),
+      tabNeighbor: function () { self.setState({ tab: 'neighbor' }); },
+      tabHelper: function () { self.setState({ tab: 'helper' }); },
+
+      navHomeStyle: nav(s.screen === 'home'),
+      navPostStyle: nav(s.screen === 'post'),
+      navProfileStyle: nav(s.screen === 'profile')
+    };
+  }
+}
+</script>
+</body>
+</html>
